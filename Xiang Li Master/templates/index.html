@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Add jQuery -->
+<title>TechMate</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<link rel="stylesheet" href="style.css">
+{% endblock %}
+
+{% block body %}
+<div class="PageTitle">
+    <h2>TechMate</h2>
+    <hr>
+    <p>Welcome to TechMate, your ultimate resource for discovering the best laptops currently in stock. Whether you're in the market for a new device or just curious about the latest trends, we’ve got you covered. Explore our interactive graphs to see how top laptops compare in terms of specs and performance. Our laptop recommendation tool helps you find the perfect match based on your needs, while our simple log form lets you keep track of when and which laptop you've purchased. Let TechMate guide you to the right choice for your tech needs!</p>
+    <div class="HomePageMainContent">
+      <div class="abouts" style="margin-left:2%;  height: 300px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div class="abouts" style="margin-left:0%; width: 45%; height: 300px; overflow: hidden;">
+            One of the key features on our site is the scatter plot, which investigates the relationship between laptop weight and price. By plotting these two variables, we offer a clear insight into how the weight of a laptop correlates with its cost. With a correlation of 0.18, we observe a weak positive relationship, meaning that while heavier laptops tend to be priced slightly higher, the connection isn’t very strong. This graph allows you to quickly grasp how weight and price are linked, giving you valuable insight into the trade-off between cost and portability across various laptop models.
+          </div>
+          <div class="abouts" style="padding-right:20px; width: 45%; height: 300px; overflow: hidden;">
+            Another distinctive feature on our website is the box plot, which explores the relationship between CPU brands and laptop prices. The plot visually represents the price distribution for different CPU brands, highlighting important statistical values. The mode, or most frequent price, is €644.1, showing that this is the most common price among the laptops. The median price is €573.19, which means half of the laptops are priced below and half above. The mean price is €659.17, slightly higher than the median, indicating a skew toward more expensive models. This box plot helps you not only see the average price of laptops with specific CPU brands but also understand the range and variation in pricing.
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>
+
+<div class="HomePageMainContent">
+  <!-- Left side content -->
+  <div class="About" style="font-family: Lato, sans-serif;">
+    <h3>Scatter plot between price and weight</h3>
+    <p>Scatter Plot</p>
+    <button class="button-78" onclick="getCorrelation()" role="button">Find correlation</button>
+    <br>
+    <label class="rocker rocker-small" style="user-select: none;">
+      <input type="checkbox" id="leftButton" onclick="toggleGraph('left')">
+      <span class="switch-left">Show</span>
+      <span class="switch-right">Close</span>
+    </label>
+    <div id="correlationResult"></div>
+    <div id="graph-container-left" style="display: none;">
+        {{ plot_html_scatter|safe }}
+    </div>
+    <br>
+    <br>
+  </div>
+
+  <!-- Right side content -->
+  <div class="About" style="font-family: Lato, sans-serif;">
+    <h3>Data Analysis Dashboard</h3>
+    <p>Price Distribution by CPU Brand</p>
+    <button class="button-78" onclick="getMean()" role="button">Find Mean/Average</button>
+    <button class="button-78" onclick="getMedian()" role="button">Find Median</button>
+    <button class="button-78" onclick="getMode()" role="button">Find Mode</button>
+    <label class="rocker rocker-small" style="user-select: none;">
+      <input type="checkbox" id="rightButton" onclick="toggleGraph('right')">
+      <span class="switch-left">Show</span>
+      <span class="switch-right">Close</span>
+    </label>
+    <div id="result"></div>
+    <div id="graph-container-right" style="display: none;">
+        {{ plot_html_box|safe }}
+    </div>
+    <br>
+    <br>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<script>
+function toggleGraph(side) {
+    let graphContainer = document.getElementById(`graph-container-${side}`);
+    let button = document.getElementById(`${side}Button`);
+
+    if (graphContainer.style.display === "none" || graphContainer.style.display === "") {
+        graphContainer.style.display = "block";
+    } else {
+        graphContainer.style.display = "none";
+    }
+}
+
+function getMean() {
+    $.ajax({
+        url: "/mean",
+        success: function(data) {
+            $('#result').html(data.resultMean);
+        }
+    });
+}
+
+function getMedian() {
+    $.ajax({
+        url: "/median",
+        success: function(data) {
+            $('#result').html(data.resultMedian);
+        }
+    });
+}
+
+function getMode() {
+    $.ajax({
+        url: "/mode",
+        success: function(data) {
+            $('#result').html(data.resultMode);
+        }
+    });
+}
+
+function getCorrelation() {
+    $.ajax({
+        url: "/correlation",
+        success: function(data) {
+            $('#correlationResult').html(data.resultCorrelation);
+        },
+        error: function() {
+            $('#correlationResult').html('<p>Error fetching correlation. Please try again.</p>');
+        }
+    });
+}
+</script>
+
+{% endblock %}

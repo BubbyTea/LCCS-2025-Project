@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Laptop Usage and Expectations</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+{% endblock %}
+<!--78.9%-->
+{% block body %}
+<div class="container" style="margin-top:8%;">
+    <h2>Laptop Usage and Expectations</h2>
+    <p style="font-size:14px; ">Welcome to our Laptop Usage and Expectations Survey! We want to help you find the best laptop suited to your needs, whether it’s for school, work, gaming, or general use. This survey will help us understand how you use your laptop, what features matter most to you, and what factors influence your purchasing decisions. Your feedback is invaluable and will assist in shaping future laptop recommendations that align with your preferences. The survey should only take a few minutes, and we appreciate your time in helping us provide better advice and insights for laptop users like you!</p>
+    <br>
+    <form autocomplete="off" id="laptopForm">
+        <!-- Laptop Purchase Date -->
+        <label for="purchaseDate">1. When did you purchase your laptop? *</label>
+        <input type="date" id="purchaseDate">
+
+        <label for="laptopPrice">How much did your laptop cost? (€)</label>
+        <input type="number" id="price" name="price" placeholder="Enter price">
+
+
+        <!-- Laptop Usage Environment -->
+        <label for="usageEnvironment">2. Where do you use your laptop? *</label>
+        <input type="text" id="usageEnvironment" placeholder="e.g., home, office, school, etc.">
+
+        <!-- Laptop Usage Type -->
+        <label for="usageType">3. What do you use your laptop for? *</label>
+        <input type="text" id="usageType" placeholder="e.g., work,school, etc">
+
+        <!-- Laptop Usage Frequency -->
+        <label for="usageFrequency">4. How often do you use your laptop? *</label>
+        <input type="text" id="usageFrequency" placeholder="e.g., daily, weekly, monthly">
+
+        <!-- Preferred Laptop Storage -->
+        <label for="preferredStorage">5. What storage amount is in your laptop? *</label>
+        <div class="radio-group">
+            <input type="radio" id="500gb" name="storage" value="500GB">
+            <label for="500gb">500GB</label>
+            <br>
+            <input type="radio" id="1tb" name="storage" value="1TB">
+            <label for="1tb">1TB</label>
+            <br>
+            <input type="radio" id="2tb" name="storage" value="2TB">
+            <label for="2tb">2TB</label>
+            <br>
+            <input type="radio" id="other" name="storage" value="Other">
+            <label for="other">Other</label>
+            <br>
+        </div>
+
+        <!-- Expected Battery Life -->
+        <label for="batteryLife">6. How long is your laptop's battery last on a single charge? *</label>
+        <div class="radio-group">
+            <input type="radio" id="lessThan4" name="battery" value="Less than 4 hours">
+            <label for="lessThan4">Less than 4 hours</label>
+            <br>
+            <input type="radio" id="4to6" name="battery" value="4-6 hours">
+            <label for="4to6">4-6 hours</label>
+            <br>
+            <input type="radio" id="6to8" name="battery" value="6-8 hours">
+            <label for="6to8">6-8 hours</label>
+            <br>
+            <input type="radio" id="8Plus" name="battery" value="8+ hours">
+            <label for="8Plus">8+ hours</label>
+            <br>
+        </div>
+
+
+        <!-- Laptop Brands Considered -->
+        <label for="laptopBrands">7. Which laptop brands have you considered or are interested in? *</label>
+        <input type="text" id="laptopBrands" placeholder="e.g., Dell, HP, Apple">
+
+
+        <!-- Most Important Laptop Feature -->
+        <label for="importantFeature">8. Which of the following features is most important to you in a laptop? *</label>
+        <div class="checkbox-group">
+            <input type="checkbox" id="performance" value="Performance">
+            <label for="performance">Performance</label>
+            <br>
+            <input type="checkbox" id="portability" value="Portability">
+            <label for="portability">Portability</label>
+            <br>
+            <input type="checkbox" id="batteryLife" value="Battery life">
+            <label for="batteryLife">Battery life</label>
+            <br>
+            <input type="checkbox" id="screenQuality" value="Screen quality">
+            <label for="screenQuality">Screen quality</label>
+            <br>
+            <input type="checkbox" id="keyboardFeel" value="Keyboard feel">
+            <label for="keyboardFeel">Keyboard feel</label>
+            <br>
+        </div>
+
+
+
+        <!-- Laptop Purchase Decision Factors -->
+        <label for="purchaseFactors">9. What factors do you consider when purchasing a new laptop? *</label>
+        <input type="text" id="purchaseFactors" placeholder="e.g., price, brand, features">
+
+
+        <!-- Laptop Upgrade Frequency -->
+        <label for="upgradeFrequency">10. How often do you upgrade your laptop? *</label>
+        <div class="radio-group">
+            <input type="radio" id="yearly" name="upgrade" value="Every year">
+            <label for="yearly">Every year</label>
+            <br>
+            <input type="radio" id="every2to3" name="upgrade" value="Every 2-3 years">
+            <label for="every2to3">Every 2-3 years</label>
+            <br>
+            <input type="radio" id="every4to5" name="upgrade" value="Every 4-5 years">
+            <label for="every4to5">Every 4-5 years</label>
+            <br>
+            <input type="radio" id="moreThan5" name="upgrade" value="More than 5 years">
+            <label for="moreThan5">More than 5 years</label>
+            <br>
+        </div>
+
+
+        <!-- Laptop Limitations -->
+        <label for="laptopLimitations">11. Have you ever faced limitations or issues with your laptop? If so, what were they? *</label>
+        <textarea id="laptopLimitations" placeholder="e.g., slow performance, software issues"></textarea>
+
+        <!-- Submit Button -->
+        <button type="button" id="sendBtn">Submit</button>
+
+
+        <div id="errorMessage" style="color: red; display: none;">There was an error submitting your survey. Please try again.</div>
+    </form>
+</div>
+<div class="TableContainer" id="dataContainer" style="margin-top:4%;">
+    <p style="color: #000000; font-size:20;">Thank you for participating in our Laptop Usage and Expectations Survey! The data below shows feedback from users who have shared their experiences with different laptops, including details about usage frequency, important features, and preferred brands. By reviewing this information, you can gain valuable insights into how others use their laptops and what factors influence their purchasing decisions. This will help you make a more informed choice when selecting the laptop that best suits your needs.</p>
+    <button type="button" style="align:center;" id="showDataBtn" >Show Collected Data</button>
+    <br>
+    <table id="dataTable" style="width: 50%;">
+        <thead>
+            <tr style="color:#000000;   ">
+                <th>Usage Frequency</th>
+                <th>Purchase Date</th>
+                <th>Usage Environment</th>
+                <th>Usage Type</th>
+                <th>Storage</th>
+                <th>Battery Life</th>
+                <th>Laptop Brands</th>
+                <th>Purchase Factors</th>
+                <th>Upgrade Frequency</th>
+                <th>Laptop Limitations</th>
+            </tr>
+        </thead>
+        <tbody id="dataTableBody"></tbody>
+    </table>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+<!-- Your custom JavaScript file -->
+<script src="{{ url_for('static', filename='form.js') }}"></script>
+{% endblock %}
